@@ -68,7 +68,12 @@
             z-index: 1000; text-align: center; visibility: hidden; opacity: 0; transition: 0.5s; width: 85%; max-width: 400px;
         }
         #selection-notice.show { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .confetti-icon { font-size: 50px; display: block; margin-bottom: 10px; animation: bounce 1s infinite; }
+        .confetti-icon { font-size: 50px; display: block; margin-bottom: 5px; animation: bounce 1s infinite; }
+        .notice-score { font-size: 1.8rem; font-weight: 800; color: var(--success); margin-bottom: 10px; display: block; }
+
+        .trainer-info { margin-bottom: 20px; }
+        .trainer-name { font-weight: 700; color: var(--primary); font-size: 1.15rem; }
+        .trainer-title { font-size: 0.75rem; color: #636e72; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -77,11 +82,15 @@
 
 <div id="selection-notice">
     <span class="confetti-icon">🎉</span>
+    <span id="sel-score-display" class="notice-score">0%</span>
     <h2 style="color: var(--success);">Congratulations!</h2>
-    <p id="sel-text" style="font-weight: 700; margin: 10px 0; font-size: 1.1rem;"></p>
-    <p>You have successfully completed the</p>
-    <p style="font-weight: 700; color: var(--primary); font-size: 1.2rem; background: #eee; padding: 8px; border-radius: 10px; margin: 10px 0;">Forever Marketing Plan 🎓</p>
-    <button class="btn" onclick="closeNotice()" style="width: 100%; margin-top: 15px;">Continue</button>
+    <div id="sel-names" style="margin: 15px 0;">
+        <p id="sel-user-name" style="font-weight: 700; color: var(--text); font-size: 1.1rem;"></p>
+        <p id="sel-mentor-name" style="font-weight: 600; color: #636e72; font-size: 0.9rem;"></p>
+    </div>
+    <p>You are selected for the next class:</p>
+    <p style="font-weight: 700; color: var(--primary); font-size: 1.2rem; background: #eee; padding: 8px; border-radius: 10px; margin: 10px 0;">[ Products Knowledge ] 🎓</p>
+    <button class="btn" onclick="closeNotice()" style="width: 100%; margin-top: 15px;">Get Started</button>
 </div>
 
 <div class="container">
@@ -94,9 +103,14 @@
     </div>
 
     <div id="welcome">
-        <div style="margin-bottom: 5px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">By Juwel Rana Sir</div>
-        <div style="margin-bottom: 25px; font-size: 0.85rem; color: #636e72; font-weight: 600; line-height: 1.4;">
-            Mastering the Business Opportunities with Forever Living Products
+        <div class="trainer-info">
+            <div class="trainer-name">Provide by Juwel Rana Sir</div>
+            <div class="trainer-title">
+                Corporate Trainer | Co-Founder | Assistant Manager
+            </div>
+        </div>
+        <div style="margin-bottom: 25px; font-size: 0.85rem; color: #636e72; font-weight: 600; line-height: 1.4; font-style: italic;">
+            "Mastering the Business Opportunities with Forever Living Products"
         </div>
         
         <div class="input-box">
@@ -154,7 +168,7 @@
         { q_en: "6. What is Retail Profit in FLP business?", q_bn: "৬. FLP ব্যবসায় রিটেইল প্রফিট (খুচরা লাভ) কি?", a_en: ["Product turn over profit", "Preferred Customer profit", "Team profit"], a_bn: ["পণ্য বিক্রির লাভ", "প্রিফারড কাস্টমার প্রফিট", "টিম প্রফিট"], ans: 0 },
         { q_en: "7. Suppose, you are a Manager and you have 1 Supervisor in your team; what is the percentage you will get from whole supervisor team business?", q_bn: "৭. আপনি ম্যানেজার এবং আপনার টিমে ১ জন সুপারভাইজার থাকলে, ওই টিম থেকে কত % পাবেন?", a_en: ["5%", "10%", "20%"], a_bn: ["৫%", "১০%", "২০%"], ans: 1 },
         { q_en: "8. What is ForeverToDrive level - 1 bonus?", q_bn: "৮. ForeverToDrive লেভেল-১ বোনাস কত?", a_en: ["400 dollar for 3 months", "500 dollar for 1 year", "400 dollar for 3 years"], a_bn: ["৩ মাসের জন্য ৪০০ ডলার", "১ বছরের জন্য ৫০০ ডলার", "৩ বছরের জন্য ৪০০ ডলার"], ans: 2 },
-        { q_en: "9. How many Global Travel Incentive forever gives in a year for qualified FBOs?", q_bn: "৯. বছরে কয়টি গ্লোবাল ট্রাভেল ইনসেনটিভ দেয়?", a_en: ["No tour", "1", "2"], a_bn: ["কোনো ট্যুর নেই", "১টি", "২টি"], ans: 2 },
+        { q_en: "9. How many Global Travel Incentive forever gives in a year for qualified FBOs?", q_bn: "৯. বছরে কয়টি গ্লোবাল ট্রাভেল ইনসেনティブ দেয়?", a_en: ["No tour", "1", "2"], a_bn: ["কোনো ট্যুর নেই", "১টি", "২টি"], ans: 2 },
         { q_en: "10. What's the most amazing bonus of FLP business?", q_bn: "১০. FLP ব্যবসার সবচেয়ে আশ্চর্যজনক বোনাস কোনটি?", a_en: ["Retail profit", "Leadership bonus", "Chairman bonus"], a_bn: ["খুচরা লাভ", "লিডারশিপ বোনাস", "চেয়ারম্যান বোনাস"], ans: 2 }
     ];
 
@@ -215,12 +229,16 @@
     function prev() { if(currentIdx > 0) { currentIdx--; renderQuestion(); } }
 
     function showResult() {
+        const userName = document.getElementById('userName').value;
+        const mentorName = document.getElementById('mentorName').value;
+        
         document.getElementById('quiz').classList.add('hidden');
         document.getElementById('result').classList.remove('hidden');
         let score = 0;
         let selectedAnswersTexts = [];
         const revBox = document.getElementById('review-list');
         revBox.innerHTML = "";
+        
         userAnswers.forEach((ans, i) => {
             const isCorrect = ans === quizData[i].ans;
             if(isCorrect) score++;
@@ -232,22 +250,27 @@
             item.innerHTML = `<b>${qTxt}</b><br><span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">Your Ans: ${userChoiceText}</span>`;
             revBox.appendChild(item);
         });
+        
         let pct = Math.round((score / quizData.length) * 100);
         document.getElementById('pctText').innerText = pct + "%";
         document.getElementById('ring').style.strokeDashoffset = 283 - (283 * pct / 100);
+        
         fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
             body: JSON.stringify({
-                name: document.getElementById('userName').value,
-                mentor: document.getElementById('mentorName').value,
+                name: userName,
+                mentor: mentorName,
                 percentage: pct + "%",
                 answers: selectedAnswersTexts
             })
         });
+
         if(pct >= 50) {
             setTimeout(() => {
-                document.getElementById('sel-text').innerText = "Dear, " + document.getElementById('userName').value;
+                document.getElementById('sel-score-display').innerText = pct + "%";
+                document.getElementById('sel-user-name').innerText = "Dear, " + userName;
+                document.getElementById('sel-mentor-name').innerText = "Mentor: " + mentorName;
                 document.getElementById('selection-notice').classList.add('show');
             }, 1000);
         }
