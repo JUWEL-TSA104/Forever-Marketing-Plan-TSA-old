@@ -1,1 +1,258 @@
-আমার্ সোনার্ বাংলা 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLP Forever Marketing Plan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap');
+
+        :root {
+            --primary: #6c5ce7;
+            --success: #00b894;
+            --danger: #d63031;
+            --warning: #f1c40f;
+            --bg: #f0f3f7;
+            --text: #2d3436;
+            --shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+            --inner-shadow: inset 6px 6px 12px #c1c9d7, inset -6px -6px 12px #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        body { font-family: 'Poppins', 'Hind Siliguri', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .container { background: var(--bg); width: 100%; max-width: 500px; border-radius: 30px; box-shadow: var(--shadow); padding: 30px; text-align: center; position: relative; }
+        
+        #custom-alert {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: #ff7675; color: white; padding: 12px 25px; border-radius: 50px;
+            font-weight: 600; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000;
+            transition: 0.5s; opacity: 0;
+        }
+        #custom-alert.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        .header h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .lang-box { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .lang-btn { padding: 8px 15px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; background: var(--bg); box-shadow: var(--shadow); }
+        .lang-btn.active { box-shadow: var(--inner-shadow); color: var(--primary); }
+        
+        .input-box { text-align: left; margin-bottom: 15px; }
+        .input-box label { font-size: 0.75rem; font-weight: 700; color: #7f8c8d; margin-left: 10px; }
+        .neumorph-input { width: 100%; padding: 12px; border: none; background: var(--bg); border-radius: 12px; box-shadow: var(--inner-shadow); outline: none; margin-top: 5px; }
+        .neumorph-input.error { border: 1px solid var(--danger); animation: shake 0.3s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .btn { padding: 15px; border: none; border-radius: 15px; cursor: pointer; font-weight: 700; background: var(--bg); box-shadow: var(--shadow); color: var(--primary); }
+        .btn-start { width: 100%; background: var(--primary); color: white; margin-top: 10px; text-decoration: none; display: inline-block; }
+        .hidden { display: none; }
+        .option { padding: 15px; margin-bottom: 12px; border-radius: 12px; cursor: pointer; background: var(--bg); box-shadow: var(--shadow); text-align: left; font-size: 0.95rem; }
+        .option.selected { box-shadow: var(--inner-shadow); color: var(--primary); font-weight: 700; border-left: 5px solid var(--primary); }
+        .nav-btns { display: flex; justify-content: space-between; margin-top: 20px; gap: 15px; }
+
+        .score-circle { width: 100px; height: 100px; margin: 20px auto; position: relative; }
+        .score-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+        svg { transform: rotate(-90deg); width: 100%; height: 100%; }
+        circle { fill: none; stroke-width: 8; stroke: #dfe6e9; stroke-dasharray: 283; }
+        .progress-bar { stroke: var(--primary); stroke-dashoffset: 283; transition: 1s; }
+        .review-container { text-align: left; margin-top: 25px; max-height: 250px; overflow-y: auto; padding-right: 10px; border-bottom: 1px solid #ddd; }
+        .review-item { padding: 10px; margin-bottom: 10px; border-radius: 10px; box-shadow: var(--inner-shadow); font-size: 0.85rem; }
+
+        #selection-notice {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5);
+            background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000; text-align: center; visibility: hidden; opacity: 0; transition: 0.5s; width: 85%; max-width: 400px;
+        }
+        #selection-notice.show { visibility: visible; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .confetti-icon { font-size: 50px; display: block; margin-bottom: 10px; animation: bounce 1s infinite; }
+    </style>
+</head>
+<body>
+
+<div id="custom-alert">⚠️ Please complete this field!</div>
+
+<div id="selection-notice">
+    <span class="confetti-icon">🎉</span>
+    <h2 style="color: var(--success);">Congratulations!</h2>
+    <p id="sel-text" style="font-weight: 700; margin: 10px 0; font-size: 1.1rem;"></p>
+    <p>You have successfully completed the</p>
+    <p style="font-weight: 700; color: var(--primary); font-size: 1.2rem; background: #eee; padding: 8px; border-radius: 10px; margin: 10px 0;">Forever Marketing Plan 🎓</p>
+    <button class="btn" onclick="closeNotice()" style="width: 100%; margin-top: 15px;">Continue</button>
+</div>
+
+<div class="container">
+    <div class="header">
+        <h2>Forever Marketing Plan</h2>
+        <div class="lang-box">
+            <button class="lang-btn active" onclick="setLang('en')">English</button>
+            <button class="lang-btn" onclick="setLang('bn')">বাংলা</button>
+        </div>
+    </div>
+
+    <div id="welcome">
+        <div style="margin-bottom: 5px; font-weight: 700; color: var(--primary); font-size: 1.1rem;">By Juwel Rana Sir</div>
+        <div style="margin-bottom: 25px; font-size: 0.85rem; color: #636e72; font-weight: 600; line-height: 1.4;">
+            Mastering the Business Opportunities with Forever Living Products
+        </div>
+        
+        <div class="input-box">
+            <label id="label-name">FULL NAME</label>
+            <input type="text" id="userName" class="neumorph-input" placeholder="Enter your full name">
+        </div>
+        <div class="input-box">
+            <label id="label-mentor">MENTOR NAME</label>
+            <input type="text" id="mentorName" class="neumorph-input" placeholder="Enter mentor name">
+        </div>
+        <button class="btn btn-start" onclick="startQuiz()">START ASSESSMENT</button>
+    </div>
+
+    <div id="quiz" class="hidden">
+        <p id="progress" style="font-weight: 700; color: var(--primary); margin-bottom: 10px;"></p>
+        <h3 id="question" style="margin-bottom: 20px; font-size: 1rem;"></h3>
+        <div id="options"></div>
+        <div class="nav-btns">
+            <button class="btn" id="prevBtn" onclick="prev()"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="btn" style="flex:1" id="nextBtn" onclick="next()">NEXT</button>
+        </div>
+    </div>
+
+    <div id="result" class="hidden">
+        <h2 id="res-title">Final Result</h2>
+        <div class="score-circle">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45"></circle>
+                <circle id="ring" class="progress-bar" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="score-text" id="pctText">0%</div>
+        </div>
+        <div id="review-list" class="review-container"></div>
+        <a href="https://m.me/YOUR_PAGE_ID" class="btn btn-start" style="margin-top: 20px;">Message Mentor</a>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJqxlJM3ts8hodNKK5rGqCMVZl6wSNjyK4U7CovI88ypwjSstg3y7B94cOjxtzUnQx/exec";
+    let currentLang = 'en';
+    let currentIdx = 0;
+    let userAnswers = [];
+
+    const translations = {
+        en: { start: "START ASSESSMENT", name: "FULL NAME", mentor: "MENTOR NAME", next: "NEXT", finish: "FINISH", alertName: "Please enter your Name!", alertMentor: "Please enter Mentor Name!", alertQuiz: "Please select an answer!" },
+        bn: { start: "অ্যাসেসমেন্ট শুরু করুন", name: "আপনার নাম", mentor: "মেন্টরের নাম", next: "পরবর্তী", finish: "শেষ করুন", alertName: "আপনার নাম লিখুন!", alertMentor: "মেন্টরের নাম লিখুন!", alertQuiz: "একটি উত্তর নির্বাচন করুন!" }
+    };
+
+    const quizData = [
+        { q_en: "1. What are 3P's of Forever Living?", q_bn: "১. ফরএভার লিভিং-এর ৩টি 'P' কি কি?", a_en: ["Plant, Production, Panel", "Profile, Plan, Product", "Product, Plant, Plan"], a_bn: ["প্ল্যান্ট, প্রোডাকশন, প্যানেল", "প্রোফাইল, প্ল্যান, প্রোডাক্ট", "প্রোডাক্ট, প্ল্যান্ট, প্ল্যান"], ans: 1 },
+        { q_en: "2. What type of business FLP provides?", q_bn: "২. FLP কি ধরনের ব্যবসা প্রদান করে?", a_en: ["Legacy Business", "Traditional business", "Marketplace business"], a_bn: ["লেগাসি বিজনেস", "প্রচলিত ব্যবসা", "মার্কেটপ্লেস বিজনেস"], ans: 0 },
+        { q_en: "3. 1CC = BDT (MRP)?", q_bn: "৩. ১ সিসি (1CC) = কত টাকা (MRP)?", a_en: ["20000", "15000", "30500"], a_bn: ["২০০০০", "১৫০০০", "৩০৫০০"], ans: 2 },
+        { q_en: "4. What qualification you need to become a Forever Business Owner (FBO)?", q_bn: "৪. FBO হওয়ার জন্য আপনার কি যোগ্যতা প্রয়োজন?", a_en: ["1cc", "2cc", "3cc"], a_bn: ["১ সিসি", "২ সিসি", "৩ সিসি"], ans: 1 },
+        { q_en: "5. When you qualify AS level, how much profit & bonus you will get from a Preferred Customer (PC)?", q_bn: "৫. AS লেভেলে একজন PC থেকে কত শতাংশ লাভ ও বোনাস পাবেন?", a_en: ["20%", "30%", "40%"], a_bn: ["২০%", "৩০%", "৪০%"], ans: 1 },
+        { q_en: "6. What is Retail Profit in FLP business?", q_bn: "৬. FLP ব্যবসায় রিটেইল প্রফিট (খুচরা লাভ) কি?", a_en: ["Product turn over profit", "Preferred Customer profit", "Team profit"], a_bn: ["পণ্য বিক্রির লাভ", "প্রিফারড কাস্টমার প্রফিট", "টিম প্রফিট"], ans: 0 },
+        { q_en: "7. Suppose, you are a Manager and you have 1 Supervisor in your team; what is the percentage you will get from whole supervisor team business?", q_bn: "৭. আপনি ম্যানেজার এবং আপনার টিমে ১ জন সুপারভাইজার থাকলে, ওই টিম থেকে কত % পাবেন?", a_en: ["5%", "10%", "20%"], a_bn: ["৫%", "১০%", "২০%"], ans: 1 },
+        { q_en: "8. What is ForeverToDrive level - 1 bonus?", q_bn: "৮. ForeverToDrive লেভেল-১ বোনাস কত?", a_en: ["400 dollar for 3 months", "500 dollar for 1 year", "400 dollar for 3 years"], a_bn: ["৩ মাসের জন্য ৪০০ ডলার", "১ বছরের জন্য ৫০০ ডলার", "৩ বছরের জন্য ৪০০ ডলার"], ans: 2 },
+        { q_en: "9. How many Global Travel Incentive forever gives in a year for qualified FBOs?", q_bn: "৯. বছরে কয়টি গ্লোবাল ট্রাভেল ইনসেনটিভ দেয়?", a_en: ["No tour", "1", "2"], a_bn: ["কোনো ট্যুর নেই", "১টি", "২টি"], ans: 2 },
+        { q_en: "10. What's the most amazing bonus of FLP business?", q_bn: "১০. FLP ব্যবসার সবচেয়ে আশ্চর্যজনক বোনাস কোনটি?", a_en: ["Retail profit", "Leadership bonus", "Chairman bonus"], a_bn: ["খুচরা লাভ", "লিডারশিপ বোনাস", "চেয়ারম্যান বোনাস"], ans: 2 }
+    ];
+
+    userAnswers = new Array(quizData.length).fill(null);
+
+    function showAlert(msg) {
+        const alertBox = document.getElementById('custom-alert');
+        alertBox.innerText = msg;
+        alertBox.classList.add('show');
+        setTimeout(() => alertBox.classList.remove('show'), 3000);
+    }
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        if(event && event.target) event.target.classList.add('active');
+        document.getElementById('label-name').innerText = translations[lang].name;
+        document.getElementById('label-mentor').innerText = translations[lang].mentor;
+        if(!document.getElementById('quiz').classList.contains('hidden')) renderQuestion();
+    }
+
+    function startQuiz() {
+        const nameInput = document.getElementById('userName');
+        const mentorInput = document.getElementById('mentorName');
+        nameInput.classList.remove('error');
+        mentorInput.classList.remove('error');
+        if(!nameInput.value.trim()) { nameInput.classList.add('error'); showAlert(translations[currentLang].alertName); return; }
+        if(!mentorInput.value.trim()) { mentorInput.classList.add('error'); showAlert(translations[currentLang].alertMentor); return; }
+        document.getElementById('welcome').classList.add('hidden');
+        document.getElementById('quiz').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = quizData[currentIdx];
+        document.getElementById('progress').innerText = `Question: ${currentIdx + 1} / ${quizData.length}`;
+        document.getElementById('question').innerText = currentLang === 'en' ? q.q_en : q.q_bn;
+        const optBox = document.getElementById('options');
+        optBox.innerHTML = "";
+        const opts = currentLang === 'en' ? q.a_en : q.a_bn;
+        opts.forEach((text, i) => {
+            const div = document.createElement('div');
+            div.className = `option ${userAnswers[currentIdx] === i ? 'selected' : ''}`;
+            div.innerText = text;
+            div.onclick = () => { userAnswers[currentIdx] = i; renderQuestion(); };
+            optBox.appendChild(div);
+        });
+        document.getElementById('prevBtn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = currentIdx === quizData.length - 1 ? translations[currentLang].finish : translations[currentLang].next;
+    }
+
+    function next() {
+        if(userAnswers[currentIdx] === null) { showAlert(translations[currentLang].alertQuiz); return; }
+        if(currentIdx < quizData.length - 1) { currentIdx++; renderQuestion(); } 
+        else { showResult(); }
+    }
+
+    function prev() { if(currentIdx > 0) { currentIdx--; renderQuestion(); } }
+
+    function showResult() {
+        document.getElementById('quiz').classList.add('hidden');
+        document.getElementById('result').classList.remove('hidden');
+        let score = 0;
+        let selectedAnswersTexts = [];
+        const revBox = document.getElementById('review-list');
+        revBox.innerHTML = "";
+        userAnswers.forEach((ans, i) => {
+            const isCorrect = ans === quizData[i].ans;
+            if(isCorrect) score++;
+            const userChoiceText = currentLang === 'en' ? quizData[i].a_en[ans] : quizData[i].a_bn[ans];
+            selectedAnswersTexts.push(userChoiceText);
+            const item = document.createElement('div');
+            item.className = "review-item";
+            const qTxt = currentLang === 'en' ? quizData[i].q_en : quizData[i].q_bn;
+            item.innerHTML = `<b>${qTxt}</b><br><span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">Your Ans: ${userChoiceText}</span>`;
+            revBox.appendChild(item);
+        });
+        let pct = Math.round((score / quizData.length) * 100);
+        document.getElementById('pctText').innerText = pct + "%";
+        document.getElementById('ring').style.strokeDashoffset = 283 - (283 * pct / 100);
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                name: document.getElementById('userName').value,
+                mentor: document.getElementById('mentorName').value,
+                percentage: pct + "%",
+                answers: selectedAnswersTexts
+            })
+        });
+        if(pct >= 50) {
+            setTimeout(() => {
+                document.getElementById('sel-text').innerText = "Dear, " + document.getElementById('userName').value;
+                document.getElementById('selection-notice').classList.add('show');
+            }, 1000);
+        }
+    }
+    function closeNotice() { document.getElementById('selection-notice').classList.remove('show'); }
+</script>
+</body>
+</html>
